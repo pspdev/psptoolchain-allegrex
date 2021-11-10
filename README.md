@@ -1,6 +1,5 @@
 [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/pspdev/psptoolchain-allegrex/CI?label=CI&logo=github&style=for-the-badge)](https://github.com/pspdev/psptoolchain-allegrex/actions?query=workflow%3ACI)
 [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/pspdev/psptoolchain-allegrex/CI-Docker?label=CI-Docker&logo=github&style=for-the-badge)](https://github.com/pspdev/psptoolchain-allegrex/actions?query=workflow%3ACI-Docker)
-[![Docker Pulls](https://img.shields.io/docker/pulls/pspdev/psptoolchain-allegrex?style=for-the-badge)](https://hub.docker.com/r/pspdev/psptoolchain-allegrex/tags)
 
 What does this do?
 ==================
@@ -14,10 +13,8 @@ How do I use it?
 
 1. Set up your environment by installing the following software:
 
-        autoconf, automake, bison, bzip2, cmake, doxygen, diffutils, flex,
-        g++/gcc-c++, gcc, git, gzip, libarchive, libcurl, libelf, libgpgme,
-        libssl, libtool, libusb-dev, m4, make, ncurses, patch, pkg-config,
-        python3, readline, subversion, tar, tcl, texinfo, unzip, wget, xz-utils
+        bison, diffutils, flex, g++/gcc-c++, gcc, git, libusb-dev, m4, make, 
+        ncurses, readline, texinfo
 
 2. Set the PSPDEV and PATH environmental variables:
 
@@ -32,8 +29,9 @@ How do I use it?
     to manually add these variables yourself.
 
 3. Run the toolchain script:
-
-        ./toolchain.sh
+    ```shell
+    ./toolchain.sh
+    ```
 
 > NOTE: If you have issues with compiling try increasing the amount of
         memory available to your system by creating a swapfile.

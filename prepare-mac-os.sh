@@ -47,10 +47,10 @@ fi
 # actual installation
 if [ $try_brew -eq 1 ]; then
 	CURRENT_USER=$(stat -f '%Su' /dev/console)
-	sudo -u $CURRENT_USER brew install autoconf automake cmake gnu-sed libelf libtool pkg-config
+	sudo -u $CURRENT_USER brew install gettext texinfo bison flex gnu-sed gsl gmp mpfr
 	exit
 fi
 if [ $try_port -eq 1 ]; then
-	sudo port install autoconf automake cmake doxygen gsed libelf libtool pkgconfig
+	sudo port install  gsed
 	exit
 fi
