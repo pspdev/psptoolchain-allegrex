@@ -54,7 +54,9 @@ if [ "$(uname)" == "Darwin" ]; then
   header_paths+=("`xcrun --show-sdk-path`/usr/include")
 fi
 
-# check_header    ncurses         ncurses.h ncurses/ncurses.h
+if [ ${OSVER:0:5} == Linux ]; then
+check_header    ncurses         ncurses.h ncurses/ncurses.h
+fi
 
 check_program   git
 
@@ -64,6 +66,10 @@ check_program   g++
 
 check_program   bison
 check_program   flex
+
+if [ -n "$(uname -a | grep Fedora)" ]; then
+    check_program   cmp
+fi
 
 if [ ${#missing_depends[@]} -ne 0 ]; then
     echo "Couldn't find dependencies:"
