@@ -87,3 +87,9 @@ Visit the following sites to learn more:
 
 [MacPorts]: http://www.macports.org/
 [HomeBrew]: http://brew.sh/
+
+Know Bugs
+==========
+1. Binutils and/or gdb could fail randomly in the installation (an upgrade of the binutls is needed):
+`https://sourceware.org/bugzilla/show_bug.cgi?id=22941`
+So for "fix" the error temporally, some commits from Binutils and GCC (from 2020) have been cherry picked to the allegrex specific branches in the pspdev forks.
