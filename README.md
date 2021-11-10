@@ -1,3 +1,7 @@
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/pspdev/psptoolchain-allegrex/CI?label=CI&logo=github&style=for-the-badge)](https://github.com/pspdev/psptoolchain-allegrex/actions?query=workflow%3ACI)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/pspdev/psptoolchain-allegrex/CI-Docker?label=CI-Docker&logo=github&style=for-the-badge)](https://github.com/pspdev/psptoolchain-allegrex/actions?query=workflow%3ACI-Docker)
+[![Docker Pulls](https://img.shields.io/docker/pulls/pspdev/psptoolchain-allegrex?style=for-the-badge)](https://hub.docker.com/r/pspdev/psptoolchain-allegrex/tags)
+
 What does this do?
 ==================
 

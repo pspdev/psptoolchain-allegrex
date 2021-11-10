@@ -9,6 +9,7 @@ header_paths=(
     "/usr/local/include/$(uname -m)-linux-gnu" \
     "/usr/include/i386-linux-gnu" \
     "/usr/local/include/i386-linux-gnu"
+    "/mingw32/include/"
     # -- Add more locations here --
 )
 
@@ -53,7 +54,7 @@ if [ "$(uname)" == "Darwin" ]; then
   header_paths+=("`xcrun --show-sdk-path`/usr/include")
 fi
 
-check_header    ncurses         ncurses.h ncurses/ncurses.h
+# check_header    ncurses         ncurses.h ncurses/ncurses.h
 
 check_program   git
 
