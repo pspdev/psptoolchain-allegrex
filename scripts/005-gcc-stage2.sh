@@ -12,8 +12,8 @@ else
 fi
 
 TARGET="psp"
-
 OSVER=$(uname)
+
 ## Apple needs to pretend to be linux
 if [ ${OSVER:0:6} == Darwin ]; then
 	TARG_XTRA_OPTS="--build=i386-linux-gnu --host=i386-linux-gnu"
