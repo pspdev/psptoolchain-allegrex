@@ -1,0 +1,102 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  repository_dispatch:
+    types: [run_build]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os[0] }}
+    strategy:
+      matrix:
+        os: [[macos-latest, bash], [macOS-11, bash], [ubuntu-latest, bash], [windows-latest, msys2]]
+    defaults:
+     run:
+      shell: ${{ matrix.os[1] }} {0}
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install on Ubuntu
+      if: matrix.os[0] == 'ubuntu-latest'
+      run: |
+        sudo apt-get update
+        sudo apt-get -y install gettext texinfo bison flex libncurses5-dev libgmp3-dev libmpfr-dev libmpc-dev
+
+    - name: Install on Mac
+      if: startsWith( matrix.os[0], 'macOS' )
+      run: |
+        brew update
+        brew install gettext texinfo bison flex gnu-sed gsl gmp mpfr
+
+    - name: Install in MSYS2
+      if: matrix.os[0] == 'windows-latest'
+      uses: msys2/setup-msys2@v2
+      with:
+        msystem: MINGW32
+        install: base-devel git make texinfo flex bison patch binutils mingw-w64-i686-gcc mingw-w64-i686-dlfcn mingw-w64-i686-mpc
+        update: true
+        shell: msys2 {0}
+
+    - name: Runs all stages
+      run: |
+        export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
+        export PSPDEV=$PWD/pspdev
+        export PATH=$PATH:$PSPDEV/bin
+        ./toolchain.sh
+    
+    - name: Get short SHA
+      id: slug
+      run: echo "::set-output name=sha8::$(echo ${GITHUB_SHA} | cut -c1-8)"
+    
+    - name: Compress pspdev folder
+      run: |
+        tar -zcvf pspdev.tar.gz pspdev
+    
+    - uses: actions/upload-artifact@v2
+      with:
+        name: pspdev-${{ steps.slug.outputs.sha8 }}-${{ matrix.os[0] }}
+        path: pspdev.tar.gz
+
+  build-docker:
+    runs-on: ubuntu-latest
+    container: ${{ matrix.os[0] }}:latest
+    strategy:
+      matrix:
+        os: [[ubuntu, bash], [fedora, bash]]
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install dependencies Ubuntu
+      if: matrix.os[0] == 'ubuntu'
+      run: |
+        apt-get -y update
+        DEBIAN_FRONTEND="noninteractive" TZ="Europe/London" apt-get -y install file bison make flex texinfo gettext \
+          g++ gcc git libgmp3-dev libmpfr-dev libmpc-dev libncurses5-dev
+    
+    - name: Install dependencies Fedora
+      if: matrix.os[0] == 'fedora'
+      run: |
+        dnf -y install gcc gcc-c++ make git gettext texinfo bison flex gmp-devel mpfr-devel libmpc-devel \
+          ncurses-devel diffutils
+        
+    - name: Runs all the stages in the shell
+      run: |
+        export PSPDEV=$PWD/pspdev
+        export PATH=$PATH:$PSPDEV/bin
+        ./toolchain.sh
+        
+    - name: Get short SHA
+      id: slug
+      run: echo "::set-output name=sha8::$(echo ${GITHUB_SHA} | cut -c1-8)"
+    
+    - name: Compress pspdev folder
+      run: |
+        tar -zcvf pspdev.tar.gz pspdev
+    
+    - uses: actions/upload-artifact@v2
+      with:
+        name: pspdev-${{ steps.slug.outputs.sha8 }}-${{ matrix.os[0] }}
+        path: pspdev.tar.gz
