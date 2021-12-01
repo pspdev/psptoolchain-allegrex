@@ -4,7 +4,7 @@
 ## Download the source code.
 REPO_URL="https://github.com/pspdev/binutils-gdb.git"
 REPO_FOLDER="binutils-gdb"
-BRANCH_NAME="allegrex-v2.23.2"
+BRANCH_NAME="allegrex-v2.37.0"
 if test ! -d "$REPO_FOLDER"; then
 	git clone --depth 1 -b $BRANCH_NAME $REPO_URL $REPO_FOLDER && cd $REPO_FOLDER || { exit 1; }
 else
@@ -31,6 +31,6 @@ rm -rf build-$TARGET && mkdir build-$TARGET && cd build-$TARGET || { exit 1; }
 
 ## Compile and install.
 make --quiet -j $PROC_NR clean || { exit 1; }
-make --quiet -j $PROC_NR MAKEINFO=true || { exit 1; }
-make --quiet -j $PROC_NR install-strip MAKEINFO=true || { exit 1; } # MAKEINFO=true for disable docs isn't compiling in Alpine
+make --quiet -j $PROC_NR || { exit 1; }
+make --quiet -j $PROC_NR install-strip || { exit 1; }
 make --quiet -j $PROC_NR clean || { exit 1; }
