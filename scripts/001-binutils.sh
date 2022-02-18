@@ -34,3 +34,12 @@ make --quiet -j $PROC_NR clean || { exit 1; }
 make --quiet -j $PROC_NR || { exit 1; }
 make --quiet -j $PROC_NR install-strip || { exit 1; }
 make --quiet -j $PROC_NR clean || { exit 1; }
+
+## Make sure the windows version has the required DLLs
+if [ "${OSVER:0:5}" == MINGW ]; then
+	cp /usr/bin/libwinpthread-1.dll $PSPDEV/bin/
+	cp /usr/bin/libiconv-2.dll $PSPDEV/bin/
+	cp /usr/bin/libexpat-1.dll $PSPDEV/bin/
+	cp /usr/bin/libgmp-10.dll $PSPDEV/bin/
+	cp /usr/bin/libintl-8.dll $PSPDEV/bin/
+fi
