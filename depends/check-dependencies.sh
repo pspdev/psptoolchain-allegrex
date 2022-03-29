@@ -61,12 +61,18 @@ fi
 
 check_program   git
 
-check_program   make
+
 check_program   gcc
 check_program   g++
 
 check_program   bison
 check_program   flex
+
+if [ ${OSVER:0:5} == MINGW ]; then
+    check_program mingw32-make
+else
+    check_program make
+fi
 
 if [ -n "$(uname -a | grep Fedora)" ]; then
     check_program   cmp

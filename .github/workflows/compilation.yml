@@ -36,7 +36,7 @@ jobs:
       uses: msys2/setup-msys2@v2
       with:
         msystem: MINGW32
-        install: base-devel git make texinfo flex bison patch binutils mingw-w64-i686-gcc mingw-w64-i686-dlfcn mingw-w64-i686-mpc
+        install: git texinfo flex bison patch mingw-w64-i686-toolchain mingw-w64-i686-dlfcn
         update: true
         shell: msys2 {0}
 

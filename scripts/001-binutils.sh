@@ -12,7 +12,14 @@ else
 fi
 
 TARGET="psp"
+OSVER=$(uname)
 TARG_XTRA_OPTS=""
+
+# MinGW has a different make command
+MAKE_CMD="make"
+if [ ${OSVER:0:5} == MINGW ]; then
+    MAKE_CMD="mingw32-make"
+fi
 
 ## Determine the maximum number of processes that Make can work with.
 PROC_NR=$(getconf _NPROCESSORS_ONLN)
@@ -30,10 +37,10 @@ rm -rf build-$TARGET && mkdir build-$TARGET && cd build-$TARGET || { exit 1; }
   $TARG_XTRA_OPTS || { exit 1; }
 
 ## Compile and install.
-make --quiet -j $PROC_NR clean || { exit 1; }
-make --quiet -j $PROC_NR || { exit 1; }
-make --quiet -j $PROC_NR install-strip || { exit 1; }
-make --quiet -j $PROC_NR clean || { exit 1; }
+${MAKE_CMD} --quiet -j $PROC_NR clean || { exit 1; }
+${MAKE_CMD} --quiet -j $PROC_NR || { exit 1; }
+${MAKE_CMD} --quiet -j $PROC_NR install-strip || { exit 1; }
+${MAKE_CMD} --quiet -j $PROC_NR clean || { exit 1; }
 
 ## Make sure the windows version has the required DLLs
 if [ "${OSVER:0:5}" == MINGW ]; then
