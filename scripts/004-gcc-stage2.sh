@@ -21,6 +21,12 @@ else
 	TARG_XTRA_OPTS=""
 fi
 
+# MinGW has a different make command
+MAKE_CMD="make"
+if [ "${OSVER:0:5}" == MINGW ]; then
+    MAKE_CMD="mingw32-make"
+fi
+
 ## Determine the maximum number of processes that Make can work with.
 PROC_NR=$(getconf _NPROCESSORS_ONLN)
 
@@ -41,7 +47,14 @@ rm -rf build-$TARGET-stage2 && mkdir build-$TARGET-stage2 && cd build-$TARGET-st
   $TARG_XTRA_OPTS || { exit 1; }
 
 ## Compile and install.
-make --quiet -j $PROC_NR clean          || { exit 1; }
-make --quiet -j $PROC_NR all            || { exit 1; }
-make --quiet -j $PROC_NR install-strip  || { exit 1; }
-make --quiet -j $PROC_NR clean          || { exit 1; }
+${MAKE_CMD} --quiet -j $PROC_NR clean          || { exit 1; }
+${MAKE_CMD} --quiet -j $PROC_NR all            || { exit 1; }
+${MAKE_CMD} --quiet -j $PROC_NR install-strip  || { exit 1; }
+${MAKE_CMD} --quiet -j $PROC_NR clean          || { exit 1; }
+
+## Make sure the windows version has the required DLLs
+if [ "${OSVER:0:5}" == MINGW ]; then
+	cp /mingw64/bin/libwinpthread-1.dll $PSPDEV/bin/
+	cp /mingw64/bin/libiconv-2.dll $PSPDEV/bin/
+	cp /mingw64/bin/libintl-8.dll $PSPDEV/bin/
+fi
