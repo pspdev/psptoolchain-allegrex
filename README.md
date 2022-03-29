@@ -17,6 +17,7 @@ These scripts download (`git clone`) and install:
 -   [gdb](https://github.com/pspdev/binutils-gdb "gdb")
 -   [gcc](https://github.com/pspdev/gcc "gcc")
 -   [newlib](https://github.com/pspdev/newlib "newlib")
+-   [pthread-embedded](https://github.com/pspdev/pthread-embedded "pthread-embedded")
 
 ## Requirements
 
