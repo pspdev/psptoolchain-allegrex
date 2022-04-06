@@ -36,6 +36,7 @@ rm -rf mkdir build-$TARGET-stage1 && mkdir build-$TARGET-stage1 && cd build-$TAR
   --with-float=hard \
   --with-headers=no \
   --without-newlib \
+  --disable-libatomic \
   --disable-libssp \
   --disable-multilib \
   $TARG_XTRA_OPTS || { exit 1; }
