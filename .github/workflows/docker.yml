@@ -6,6 +6,8 @@ on:
       - main
     tags:
       - v*
+  schedule:
+    - cron: 0 17 * * 5
 
 jobs:
   build:
@@ -50,6 +52,6 @@ jobs:
     - name: Repository Dispatch
       uses: peter-evans/repository-dispatch@v1
       with:
-        repository: ${{ github.repository_owner }}/psptoolchain
+        repository: ${{ github.repository_owner }}/psptoolchain-extra
         token: ${{ secrets.DISPATCH_TOKEN }}
         event-type: ${{ env.NEW_DISPATCH_ACTION }}
