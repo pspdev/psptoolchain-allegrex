@@ -4,7 +4,7 @@
 ## Download the source code.
 REPO_URL="https://github.com/pspdev/newlib.git"
 REPO_FOLDER="newlib"
-BRANCH_NAME="allegrex-v4.1.0"
+BRANCH_NAME="allegrex-v4.3.0"
 if test ! -d "$REPO_FOLDER"; then
 	git clone --depth 1 -b $BRANCH_NAME $REPO_URL && cd $REPO_FOLDER || { exit 1; }
 else
