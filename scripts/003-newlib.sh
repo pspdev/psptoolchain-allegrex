@@ -23,6 +23,7 @@ rm -rf build-$TARGET && mkdir build-$TARGET && cd build-$TARGET || { exit 1; }
 ../configure \
 	--prefix="$PSPDEV" \
 	--target="$TARGET" \
+	--enable-newlib-retargetable-locking \
 	$TARG_XTRA_OPTS || { exit 1; }
 
 ## Compile and install.
