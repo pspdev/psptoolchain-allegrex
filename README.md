@@ -1,7 +1,7 @@
 # psptoolchain-allegrex
 
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/pspdev/psptoolchain-allegrex/CI?label=CI&logo=github&style=for-the-badge)](https://github.com/pspdev/psptoolchain-allegrex/actions?query=workflow%3ACI)
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/pspdev/psptoolchain-allegrex/CI-Docker?label=CI-Docker&logo=github&style=for-the-badge)](https://github.com/pspdev/psptoolchain-allegrex/actions?query=workflow%3ACI-Docker)
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/pspdev/psptoolchain-allegrex/compilation.yml?branch=main&label=CI&logo=github&style=for-the-badge)](https://github.com/pspdev/psptoolchain-allegrex/actions?query=workflow%3ACI)
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/pspdev/psptoolchain-allegrex/docker.yml?branch=main&label=CI-Docker&logo=github&style=for-the-badge)](https://github.com/pspdev/psptoolchain-allegrex/actions?query=workflow%3ACI-Docker)
 
 This program will automatically build and install a compiler and other tools used in the creation of homebrew software for the Sony Playstation Portable handheld videogame system (PSP).
 
