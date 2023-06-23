@@ -17,7 +17,7 @@ jobs:
       shell: ${{ matrix.os[1] }} {0}
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Install on Ubuntu
       if: matrix.os[0] == 'ubuntu-latest'
@@ -46,7 +46,7 @@ jobs:
       run: |
         tar -zcvf pspdev.tar.gz pspdev
     
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v3
       with:
         name: pspdev-${{ steps.slug.outputs.sha8 }}-${{ matrix.os[0] }}
         path: pspdev.tar.gz
@@ -58,7 +58,7 @@ jobs:
       matrix:
         os: [[ubuntu, bash], [fedora, bash]]
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Install dependencies Ubuntu
       if: matrix.os[0] == 'ubuntu'
@@ -87,7 +87,7 @@ jobs:
       run: |
         tar -zcvf pspdev.tar.gz pspdev
     
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v3
       with:
         name: pspdev-${{ steps.slug.outputs.sha8 }}-${{ matrix.os[0] }}
         path: pspdev.tar.gz
