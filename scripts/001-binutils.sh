@@ -34,6 +34,7 @@ fi
   --prefix="$PSPDEV" \
   --target="$TARGET" \
   --enable-plugins \
+  --disable-initfini-array \
   --with-python="$WITH_PYTHON" \
   --disable-werror \
   $TARG_XTRA_OPTS || { exit 1; }
