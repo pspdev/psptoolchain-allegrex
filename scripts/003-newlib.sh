@@ -24,6 +24,7 @@ rm -rf build-$TARGET && mkdir build-$TARGET && cd build-$TARGET || { exit 1; }
 	--prefix="$PSPDEV" \
 	--target="$TARGET" \
 	--enable-newlib-retargetable-locking \
+	--enable-newlib-io-c99-formats \
 	$TARG_XTRA_OPTS || { exit 1; }
 
 ## Compile and install.
