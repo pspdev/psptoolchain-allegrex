@@ -1,5 +1,6 @@
 # First stage
-FROM alpine:latest
+# Please change the alpine version back to latest after 3.19 releases
+FROM alpine:3.16
 
 ENV PSPDEV /usr/local/pspdev
 ENV PATH $PATH:${PSPDEV}/bin
