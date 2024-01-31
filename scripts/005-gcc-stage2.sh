@@ -58,7 +58,6 @@ rm -rf build-$TARGET-stage2 && mkdir build-$TARGET-stage2 && cd build-$TARGET-st
   --with-newlib \
   --disable-libssp \
   --disable-multilib \
-  --enable-cxx-flags=-G0 \
   --enable-threads=posix \
   $TARG_XTRA_OPTS || { exit 1; }
 
