@@ -18,7 +18,7 @@ jobs:
       shell: ${{ matrix.os[1] }} {0}
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Install on Ubuntu
       if: matrix.os[0] == 'ubuntu-latest'
@@ -39,7 +39,6 @@ jobs:
         msystem: MINGW32
         install: base-devel git make texinfo flex bison patch binutils mingw-w64-i686-gcc mingw-w64-i686-dlfcn mingw-w64-i686-mpc
         update: true
-        shell: msys2 {0}
 
     - name: Runs all stages
       run: |
@@ -56,7 +55,7 @@ jobs:
       run: |
         tar -zcvf pspdev.tar.gz pspdev
     
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: pspdev-${{ steps.slug.outputs.sha8 }}-${{ matrix.os[0] }}
         path: pspdev.tar.gz
@@ -68,7 +67,7 @@ jobs:
       matrix:
         os: [[ubuntu, bash], [fedora, bash]]
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Install dependencies Ubuntu
       if: matrix.os[0] == 'ubuntu'
@@ -97,7 +96,7 @@ jobs:
       run: |
         tar -zcvf pspdev.tar.gz pspdev
     
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: pspdev-${{ steps.slug.outputs.sha8 }}-${{ matrix.os[0] }}
         path: pspdev.tar.gz
