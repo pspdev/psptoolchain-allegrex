@@ -12,7 +12,8 @@ jobs:
     runs-on: ${{ matrix.os[0] }}
     strategy:
       matrix:
-        os: [[macos-latest, bash], [macOS-11, bash], [ubuntu-latest, bash], [windows-latest, msys2]]
+        os: [[macos-latest, bash], [ubuntu-latest, bash], [windows-latest, msys2]]
+      fail-fast: false
     defaults:
      run:
       shell: ${{ matrix.os[1] }} {0}
@@ -24,20 +25,22 @@ jobs:
       if: matrix.os[0] == 'ubuntu-latest'
       run: |
         sudo apt-get update
-        sudo apt-get -y install gettext texinfo bison flex libncurses5-dev libgmp3-dev libmpfr-dev libmpc-dev
+        sudo apt-get -y install texinfo bison flex gettext libgmp3-dev libmpfr-dev libmpc-dev
 
     - name: Install on Mac
-      if: startsWith( matrix.os[0], 'macOS' )
+      if: matrix.os[0] == 'macos-latest'
       run: |
         brew update
-        brew install gettext texinfo bison flex gnu-sed gsl gmp mpfr
     
+        brew install texinfo bison flex gnu-sed gsl gmp mpfr libmpc
     - name: Install in MSYS2
       if: matrix.os[0] == 'windows-latest'
       uses: msys2/setup-msys2@v2
       with:
         msystem: MINGW32
-        install: base-devel git make texinfo flex bison patch binutils mingw-w64-i686-gcc mingw-w64-i686-dlfcn mingw-w64-i686-mpc
+        install: |
+          base-devel git make texinfo flex bison patch binutils mingw-w64-i686-gcc mpc-devel tar
+          mingw-w64-i686-cmake mingw-w64-i686-make mingw-w64-i686-libogg
         update: true
 
     - name: Runs all stages
