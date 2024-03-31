@@ -33,14 +33,6 @@ fi
 cd "$REPO_FOLDER"
 
 TARGET="psp"
-OSVER=$(uname)
-
-## Apple needs to pretend to be linux
-if [ ${OSVER:0:6} == Darwin ]; then
-	TARG_XTRA_OPTS="--build=i386-linux-gnu --host=i386-linux-gnu"
-else
-	TARG_XTRA_OPTS=""
-fi
 
 ## Determine the maximum number of processes that Make can work with.
 PROC_NR=$(getconf _NPROCESSORS_ONLN)
