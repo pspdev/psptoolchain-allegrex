@@ -47,6 +47,7 @@ rm -rf build-$TARGET && mkdir build-$TARGET && cd build-$TARGET || { exit 1; }
 	--enable-newlib-retargetable-locking \
 	--enable-newlib-multithread \
 	--enable-newlib-io-c99-formats \
+ 	--enable-newlib-iconv \
 	$TARG_XTRA_OPTS || { exit 1; }
 
 ## Compile and install.
