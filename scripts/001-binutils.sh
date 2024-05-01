@@ -35,6 +35,19 @@ cd "$REPO_FOLDER"
 TARGET="psp"
 TARG_XTRA_OPTS=""
 
+## If using MacOS Apple, set gmp and mpfr paths using TARG_XTRA_OPTS 
+## (this is needed for Apple Silicon but we will do it for all MacOS systems)
+if [ "$(uname -s)" = "Darwin" ]; then
+  ## Check if using brew
+  if command -v brew &> /dev/null; then
+    TARG_XTRA_OPTS="--with-gmp=$(brew --prefix gmp) --with-mpfr=$(brew --prefix mpfr)"
+  fi
+  ## Check if using MacPorts
+  if command -v port &> /dev/null; then
+    TARG_XTRA_OPTS="--with-gmp=$(port -q prefix gmp) --with-mpfr=$(port -q prefix mpfr)"
+  fi
+fi
+
 ## Determine the maximum number of processes that Make can work with.
 PROC_NR=$(getconf _NPROCESSORS_ONLN)
 
