@@ -37,6 +37,19 @@ TARGET="psp"
 ## Determine the maximum number of processes that Make can work with.
 PROC_NR=$(getconf _NPROCESSORS_ONLN)
 
+## If using MacOS Apple, set gmp, mpfr and mpc paths using TARG_XTRA_OPTS 
+## (this is needed for Apple Silicon but we will do it for all MacOS systems)
+if [ "$(uname -s)" = "Darwin" ]; then
+  ## Check if using brew
+  if command -v brew &> /dev/null; then
+    TARG_XTRA_OPTS="--with-gmp=$(brew --prefix gmp) --with-mpfr=$(brew --prefix mpfr) --with-mpc=$(brew --prefix libmpc)"
+  fi
+  ## Check if using MacPorts
+  if command -v port &> /dev/null; then
+    TARG_XTRA_OPTS="--with-gmp=$(port -q prefix gmp) --with-mpfr=$(port -q prefix mpfr) --with-mpc=$(port -q prefix libmpc)"
+  fi
+fi
+
 ## Create and enter the toolchain/build directory
 rm -rf mkdir build-$TARGET-stage1 && mkdir build-$TARGET-stage1 && cd build-$TARGET-stage1 || { exit 1; }
 
