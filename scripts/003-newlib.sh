@@ -48,6 +48,7 @@ rm -rf build-$TARGET && mkdir build-$TARGET && cd build-$TARGET || { exit 1; }
 	--enable-newlib-multithread \
 	--enable-newlib-io-c99-formats \
  	--enable-newlib-iconv \
+  	--enable-newlib-iconv-encodings=us_ascii,utf8,utf16,ucs_2_internal,ucs_4_internal,iso_8859_1 \
 	$TARG_XTRA_OPTS || { exit 1; }
 
 ## Compile and install.
