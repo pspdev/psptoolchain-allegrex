@@ -1,28 +1,54 @@
 #!/bin/bash
-# gcc-stage2.sh by Francisco Javier Trujillo Mata (fjtrujy@gmail.com)
+# 005-gcc-stage2.sh by pspdev developers
+
+## Exit with code 1 when any command executed returns a non-zero exit code.
+onerr()
+{
+  exit 1;
+}
+trap onerr ERR
+
+## Read information from the configuration file.
+source "$(dirname "$0")/../config/psptoolchain-allegrex-config.sh"
 
 ## Download the source code.
-REPO_URL="https://github.com/pspdev/gcc.git"
-REPO_FOLDER="gcc"
-BRANCH_NAME="allegrex-v11.2.0"
-if test ! -d "$REPO_FOLDER"; then
-	git clone --depth 1 -b $BRANCH_NAME $REPO_URL && cd $REPO_FOLDER || { exit 1; }
-else
-	cd $REPO_FOLDER && git fetch origin && git reset --hard origin/${BRANCH_NAME} || { exit 1; }
+REPO_URL="$PSPTOOLCHAIN_ALLEGREX_GCC_REPO_URL"
+REPO_REF="$PSPTOOLCHAIN_ALLEGREX_GCC_DEFAULT_REPO_REF"
+REPO_FOLDER="$(s="$REPO_URL"; s=${s##*/}; printf "%s" "${s%.*}")"
+
+# Checking if a specific Git reference has been passed in parameter $1
+if test -n "$1"; then
+  REPO_REF="$1"
+  printf 'Using specified repo reference %s\n' "$REPO_REF"
 fi
+
+if test ! -d "$REPO_FOLDER"; then
+  git clone --depth 1 -b "$REPO_REF" "$REPO_URL" "$REPO_FOLDER"
+else
+  git -C "$REPO_FOLDER" fetch origin
+  git -C "$REPO_FOLDER" reset --hard "origin/$REPO_REF"
+  git -C "$REPO_FOLDER" checkout "$REPO_REF"
+fi
+
+cd "$REPO_FOLDER"
 
 TARGET="psp"
-OSVER=$(uname)
-
-## Apple needs to pretend to be linux
-if [ ${OSVER:0:6} == Darwin ]; then
-	TARG_XTRA_OPTS="--build=i386-linux-gnu --host=i386-linux-gnu"
-else
-	TARG_XTRA_OPTS=""
-fi
 
 ## Determine the maximum number of processes that Make can work with.
 PROC_NR=$(getconf _NPROCESSORS_ONLN)
+
+## If using MacOS Apple, set gmp, mpfr and mpc paths using TARG_XTRA_OPTS 
+## (this is needed for Apple Silicon but we will do it for all MacOS systems)
+if [ "$(uname -s)" = "Darwin" ]; then
+  ## Check if using brew
+  if command -v brew &> /dev/null; then
+    TARG_XTRA_OPTS="--with-gmp=$(brew --prefix gmp) --with-mpfr=$(brew --prefix mpfr) --with-mpc=$(brew --prefix libmpc)"
+  fi
+  ## Check if using MacPorts
+  if command -v port &> /dev/null; then
+    TARG_XTRA_OPTS="--with-gmp=$(port -q prefix gmp) --with-mpfr=$(port -q prefix mpfr) --with-mpc=$(port -q prefix libmpc)"
+  fi
+fi
 
 ## Create and enter the toolchain/build directory
 rm -rf build-$TARGET-stage2 && mkdir build-$TARGET-stage2 && cd build-$TARGET-stage2 || { exit 1; }
@@ -37,8 +63,8 @@ rm -rf build-$TARGET-stage2 && mkdir build-$TARGET-stage2 && cd build-$TARGET-st
   --with-newlib \
   --disable-libssp \
   --disable-multilib \
-  --enable-cxx-flags=-G0 \
   --enable-threads=posix \
+  MAKEINFO=missing \
   $TARG_XTRA_OPTS || { exit 1; }
 
 ## Compile and install.
