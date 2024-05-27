@@ -1,5 +1,5 @@
 #!/bin/bash
-# 004-pthread-embeedded.sh by pspdev developers
+# pthread-embeedded by pspdev developers
 
 ## Exit with code 1 when any command executed returns a non-zero exit code.
 onerr()
@@ -7,6 +7,11 @@ onerr()
   exit 1;
 }
 trap onerr ERR
+
+## Temporal folder where to build the phase 1 of the toolchain.
+TMP_TOOLCHAIN_BUILD_DIR=$(pwd)/tmp_toolchain_build
+## Add the toolchain to the PATH.
+export PATH="$TMP_TOOLCHAIN_BUILD_DIR/bin:$PATH"
 
 ## Read information from the configuration file.
 source "$(dirname "$0")/../config/psptoolchain-allegrex-config.sh"
@@ -37,10 +42,10 @@ TARGET="psp"
 ## Determine the maximum number of processes that Make can work with.
 PROC_NR=$(getconf _NPROCESSORS_ONLN)
 
-cd platform/psp || { exit 1; }
+cd platform/psp
 
 ## Compile and install.
-make --quiet -j $PROC_NR clean          || { exit 1; }
-make --quiet -j $PROC_NR all            || { exit 1; }
-make --quiet -j $PROC_NR install  		|| { exit 1; }
-make --quiet -j $PROC_NR clean          || { exit 1; }
+make --quiet -j $PROC_NR clean
+make --quiet -j $PROC_NR all
+make --quiet -j $PROC_NR install
+make --quiet -j $PROC_NR clean

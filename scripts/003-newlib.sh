@@ -1,5 +1,5 @@
 #!/bin/bash
-# 003-newlib.sh by pspdev developers
+# newlib by pspdev developers
 
 ## Exit with code 1 when any command executed returns a non-zero exit code.
 onerr()
@@ -7,6 +7,11 @@ onerr()
   exit 1;
 }
 trap onerr ERR
+
+## Create a temporal folder where to build the phase 1 of the toolchain.
+TMP_TOOLCHAIN_BUILD_DIR=$(pwd)/tmp_toolchain_build
+## Add the toolchain to the PATH.
+export PATH="$TMP_TOOLCHAIN_BUILD_DIR/bin:$PATH"
 
 ## Read information from the configuration file.
 source "$(dirname "$0")/../config/psptoolchain-allegrex-config.sh"
@@ -38,7 +43,7 @@ TARGET="psp"
 PROC_NR=$(getconf _NPROCESSORS_ONLN)
 
 # Create and enter the toolchain/build directory
-rm -rf build-$TARGET && mkdir build-$TARGET && cd build-$TARGET || { exit 1; }
+rm -rf build-$TARGET && mkdir build-$TARGET && cd build-$TARGET
 
 # Configure the build.
 ../configure \
@@ -49,10 +54,13 @@ rm -rf build-$TARGET && mkdir build-$TARGET && cd build-$TARGET || { exit 1; }
 	--enable-newlib-io-c99-formats \
  	--enable-newlib-iconv \
   	--enable-newlib-iconv-encodings=us_ascii,utf8,utf16,ucs_2_internal,ucs_4_internal,iso_8859_1 \
-	$TARG_XTRA_OPTS || { exit 1; }
+	$TARG_XTRA_OPTS
 
 ## Compile and install.
-make --quiet -j $PROC_NR clean          || { exit 1; }
-make --quiet -j $PROC_NR all            || { exit 1; }
-make --quiet -j $PROC_NR install-strip  || { exit 1; }
-make --quiet -j $PROC_NR clean          || { exit 1; }
+make --quiet -j $PROC_NR clean
+make --quiet -j $PROC_NR all
+make --quiet -j $PROC_NR install-strip
+make --quiet -j $PROC_NR clean
+
+## Copy contents of the toolchain to the temporal folder.
+cp -r $PSPDEV/* $TMP_TOOLCHAIN_BUILD_DIR

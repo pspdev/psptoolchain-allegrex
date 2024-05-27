@@ -1,5 +1,5 @@
 #!/bin/bash
-# 001-binutils.sh by pspdev developers
+# binutils by pspdev developers
 
 ## Exit with code 1 when any command executed returns a non-zero exit code.
 onerr()
@@ -52,7 +52,7 @@ fi
 PROC_NR=$(getconf _NPROCESSORS_ONLN)
 
 ## Create and enter the toolchain/build directory
-rm -rf build-$TARGET && mkdir build-$TARGET && cd build-$TARGET || { exit 1; }
+rm -rf build-$TARGET && mkdir build-$TARGET && cd build-$TARGET
 
 ## Build GDB without python support when built with a GitHub Action
 ## This makes the pre-build executable work on more systems
@@ -71,10 +71,10 @@ fi
   --disable-initfini-array \
   --with-python="$WITH_PYTHON" \
   --disable-werror \
-  $TARG_XTRA_OPTS || { exit 1; }
+  $TARG_XTRA_OPTS
 
 ## Compile and install.
-make --quiet -j $PROC_NR clean || { exit 1; }
-make --quiet -j $PROC_NR || { exit 1; }
-make --quiet -j $PROC_NR install-strip || { exit 1; }
-make --quiet -j $PROC_NR clean || { exit 1; }
+make --quiet -j $PROC_NR clean
+make --quiet -j $PROC_NR all
+make --quiet -j $PROC_NR install-strip
+make --quiet -j $PROC_NR clean

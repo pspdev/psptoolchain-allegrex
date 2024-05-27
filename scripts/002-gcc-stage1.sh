@@ -1,5 +1,5 @@
 #!/bin/bash
-# 002-gcc-stage1.sh by pspdev developers
+# gcc-stage1 by pspdev developers
 
 ## Exit with code 1 when any command executed returns a non-zero exit code.
 onerr()
@@ -7,6 +7,16 @@ onerr()
   exit 1;
 }
 trap onerr ERR
+
+## Create a temporal folder where to build the phase 1 of the toolchain.
+TMP_TOOLCHAIN_BUILD_DIR=$(pwd)/tmp_toolchain_build
+rm -rf $TMP_TOOLCHAIN_BUILD_DIR && mkdir $TMP_TOOLCHAIN_BUILD_DIR
+## Copy toolchain content ($PSPDEV) to the temporal folder.
+cp -r $PSPDEV/* $TMP_TOOLCHAIN_BUILD_DIR
+
+## Add the toolchain to the PATH.
+export PATH="$TMP_TOOLCHAIN_BUILD_DIR/bin:$PATH"
+
 
 ## Read information from the configuration file.
 source "$(dirname "$0")/../config/psptoolchain-allegrex-config.sh"
@@ -51,24 +61,28 @@ if [ "$(uname -s)" = "Darwin" ]; then
 fi
 
 ## Create and enter the toolchain/build directory
-rm -rf mkdir build-$TARGET-stage1 && mkdir build-$TARGET-stage1 && cd build-$TARGET-stage1 || { exit 1; }
+rm -rf build-$TARGET-stage1 && mkdir build-$TARGET-stage1 && cd build-$TARGET-stage1
 
 ## Configure the build.
 ../configure \
   --quiet \
-  --prefix="$PSPDEV" \
+  --prefix="$TMP_TOOLCHAIN_BUILD_DIR" \
   --target="$TARGET" \
   --enable-languages="c" \
   --with-float=hard \
   --with-headers=no \
   --without-newlib \
-  --disable-libatomic \
+  --disable-libgcc \
+  --disable-shared \
+  --disable-threads \
   --disable-libssp \
-  --disable-multilib \
-  $TARG_XTRA_OPTS || { exit 1; }
+  --disable-libgomp \
+  --disable-libmudflap \
+  --disable-libquadmath \
+  $TARG_XTRA_OPTS
 
 ## Compile and install.
-make --quiet -j $PROC_NR clean          || { exit 1; }
-make --quiet -j $PROC_NR all            || { exit 1; }
-make --quiet -j $PROC_NR install-strip  || { exit 1; }
-make --quiet -j $PROC_NR clean          || { exit 1; }
+make --quiet -j $PROC_NR clean
+make --quiet -j $PROC_NR all-gcc
+make --quiet -j $PROC_NR install-gcc
+make --quiet -j $PROC_NR clean
