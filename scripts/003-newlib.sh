@@ -1,5 +1,5 @@
 #!/bin/bash
-# 003-newlib.sh by pspdev developers
+# newlib by pspdev developers
 
 ## Exit with code 1 when any command executed returns a non-zero exit code.
 onerr()
@@ -38,21 +38,22 @@ TARGET="psp"
 PROC_NR=$(getconf _NPROCESSORS_ONLN)
 
 # Create and enter the toolchain/build directory
-rm -rf build-$TARGET && mkdir build-$TARGET && cd build-$TARGET || { exit 1; }
+rm -rf build-$TARGET && mkdir build-$TARGET && cd build-$TARGET
 
 # Configure the build.
 ../configure \
 	--prefix="$PSPDEV" \
 	--target="$TARGET" \
+	--with-sysroot="$PSPDEV/$TARGET" \
 	--enable-newlib-retargetable-locking \
 	--enable-newlib-multithread \
 	--enable-newlib-io-c99-formats \
  	--enable-newlib-iconv \
   	--enable-newlib-iconv-encodings=us_ascii,utf8,utf16,ucs_2_internal,ucs_4_internal,iso_8859_1 \
-	$TARG_XTRA_OPTS || { exit 1; }
+	$TARG_XTRA_OPTS
 
 ## Compile and install.
-make --quiet -j $PROC_NR clean          || { exit 1; }
-make --quiet -j $PROC_NR all            || { exit 1; }
-make --quiet -j $PROC_NR install-strip  || { exit 1; }
-make --quiet -j $PROC_NR clean          || { exit 1; }
+make --quiet -j $PROC_NR clean
+make --quiet -j $PROC_NR all
+make --quiet -j $PROC_NR install-strip
+make --quiet -j $PROC_NR clean
