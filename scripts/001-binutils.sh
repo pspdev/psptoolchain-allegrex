@@ -67,6 +67,7 @@ fi
   --quiet \
   --prefix="$PSPDEV" \
   --target="$TARGET" \
+  --with-sysroot="$PSPDEV/$TARGET" \
   --enable-plugins \
   --disable-initfini-array \
   --with-python="$WITH_PYTHON" \

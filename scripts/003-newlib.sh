@@ -49,6 +49,7 @@ rm -rf build-$TARGET && mkdir build-$TARGET && cd build-$TARGET
 ../configure \
 	--prefix="$PSPDEV" \
 	--target="$TARGET" \
+	--with-sysroot="$PSPDEV/$TARGET" \
 	--enable-newlib-retargetable-locking \
 	--enable-newlib-multithread \
 	--enable-newlib-io-c99-formats \

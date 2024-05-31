@@ -58,6 +58,7 @@ rm -rf build-$TARGET-stage2 && mkdir build-$TARGET-stage2 && cd build-$TARGET-st
   --quiet \
   --prefix="$PSPDEV" \
   --target="$TARGET" \
+  --with-sysroot="$PSPDEV/$TARGET" \
   --enable-languages="c,c++" \
   --with-float=hard \
   --with-newlib \
