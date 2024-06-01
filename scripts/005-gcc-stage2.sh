@@ -59,13 +59,13 @@ rm -rf build-$TARGET-stage2 && mkdir build-$TARGET-stage2 && cd build-$TARGET-st
   --prefix="$PSPDEV" \
   --target="$TARGET" \
   --with-sysroot="$PSPDEV/$TARGET" \
+  --with-native-system-header-dir="/include" \
   --enable-languages="c,c++" \
   --with-float=hard \
   --with-newlib \
   --disable-libssp \
   --disable-multilib \
   --enable-threads=posix \
-  MAKEINFO=missing \
   $TARG_XTRA_OPTS
 
 ## Compile and install.
