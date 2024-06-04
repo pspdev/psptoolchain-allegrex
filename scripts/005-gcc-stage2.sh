@@ -1,5 +1,5 @@
 #!/bin/bash
-# 005-gcc-stage2.sh by pspdev developers
+# gcc-stage2 by pspdev developers
 
 ## Exit with code 1 when any command executed returns a non-zero exit code.
 onerr()
@@ -51,24 +51,27 @@ if [ "$(uname -s)" = "Darwin" ]; then
 fi
 
 ## Create and enter the toolchain/build directory
-rm -rf build-$TARGET-stage2 && mkdir build-$TARGET-stage2 && cd build-$TARGET-stage2 || { exit 1; }
+rm -rf build-$TARGET-stage2
+mkdir build-$TARGET-stage2
+cd build-$TARGET-stage2
 
 ## Configure the build.
 ../configure \
   --quiet \
   --prefix="$PSPDEV" \
   --target="$TARGET" \
+  --with-sysroot="$PSPDEV/$TARGET" \
+  --with-native-system-header-dir="/include" \
   --enable-languages="c,c++" \
   --with-float=hard \
   --with-newlib \
   --disable-libssp \
   --disable-multilib \
   --enable-threads=posix \
-  MAKEINFO=missing \
-  $TARG_XTRA_OPTS || { exit 1; }
+  $TARG_XTRA_OPTS
 
 ## Compile and install.
-make --quiet -j $PROC_NR clean          || { exit 1; }
-make --quiet -j $PROC_NR all            || { exit 1; }
-make --quiet -j $PROC_NR install-strip  || { exit 1; }
-make --quiet -j $PROC_NR clean          || { exit 1; }
+make --quiet -j $PROC_NR clean
+make --quiet -j $PROC_NR all
+make --quiet -j $PROC_NR install-strip
+make --quiet -j $PROC_NR clean

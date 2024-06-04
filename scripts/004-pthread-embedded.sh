@@ -1,5 +1,5 @@
 #!/bin/bash
-# 004-pthread-embeedded.sh by pspdev developers
+# pthread-embeedded by pspdev developers
 
 ## Exit with code 1 when any command executed returns a non-zero exit code.
 onerr()
@@ -37,10 +37,10 @@ TARGET="psp"
 ## Determine the maximum number of processes that Make can work with.
 PROC_NR=$(getconf _NPROCESSORS_ONLN)
 
-cd platform/psp || { exit 1; }
+cd platform/psp
 
 ## Compile and install.
-make --quiet -j $PROC_NR clean          || { exit 1; }
-make --quiet -j $PROC_NR all            || { exit 1; }
-make --quiet -j $PROC_NR install  		|| { exit 1; }
-make --quiet -j $PROC_NR clean          || { exit 1; }
+make --quiet -j $PROC_NR clean
+make --quiet -j $PROC_NR all
+make --quiet -j $PROC_NR install
+make --quiet -j $PROC_NR clean
