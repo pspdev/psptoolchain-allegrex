@@ -46,3 +46,6 @@ else
   for SCRIPT in ${BUILD_SCRIPTS[@]}; do "$SCRIPT" "$TAG" || { echo "$SCRIPT: Failed."; exit 1; } done
 
 fi
+
+## Store version
+git log -1 --format="psptoolchain-allegrex %H %cs" >> $PSPDEV/versions.txt
