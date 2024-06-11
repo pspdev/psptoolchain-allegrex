@@ -88,7 +88,7 @@ jobs:
         dnf -y install gcc gcc-c++ make git gettext texinfo bison flex gmp-devel mpfr-devel libmpc-devel \
           ncurses-devel diffutils glibc-gconv-extra which
 
-    - make: Checkout git repo
+    - name: Checkout git repo
       uses: actions/checkout@v4
       with:
         set-safe-directory: true
