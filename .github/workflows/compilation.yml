@@ -70,9 +70,7 @@ jobs:
 
   build-docker:
     runs-on: ubuntu-latest
-    container:
-      image: ${{ matrix.os[0] }}:latest
-      options: --user 1001
+    container: ${{ matrix.os[0] }}:latest
     strategy:
       matrix:
         os: [[ubuntu, bash], [fedora, bash]]
@@ -95,6 +93,7 @@ jobs:
     
     - name: Runs all the stages in the shell
       run: |
+        chown -R $(id -nu):$(id -ng) .
         export PSPDEV=$PWD/pspdev
         export PATH=$PATH:$PSPDEV/bin
         ./toolchain.sh
