@@ -24,6 +24,8 @@ jobs:
       shell: ${{ matrix.os[2] }} {0}
 
     steps:
+    - uses: actions/checkout@v4
+
     - name: Install on Ubuntu
       if: matrix.os[0] == 'ubuntu-latest'
       run: |
@@ -45,8 +47,6 @@ jobs:
           base-devel git make texinfo flex bison patch binutils mingw-w64-i686-gcc mpc-devel tar
           mingw-w64-i686-cmake mingw-w64-i686-make mingw-w64-i686-libogg
         update: true
-
-    - uses: actions/checkout@v4
 
     - name: Runs all stages
       run: |
@@ -75,8 +75,6 @@ jobs:
       matrix:
         os: [[ubuntu, bash], [fedora, bash]]
     steps:
-    - uses: actions/checkout@v4
-
     - name: Install dependencies Ubuntu
       if: matrix.os[0] == 'ubuntu'
       run: |
@@ -89,7 +87,9 @@ jobs:
       run: |
         dnf -y install gcc gcc-c++ make git gettext texinfo bison flex gmp-devel mpfr-devel libmpc-devel \
           ncurses-devel diffutils glibc-gconv-extra
-        
+
+    - uses: actions/checkout@v4
+    
     - name: Runs all the stages in the shell
       run: |
         export PSPDEV=$PWD/pspdev
