@@ -48,5 +48,8 @@ else
 fi
 
 ## Store version
-sed -i '/^psptoolchain-allegrex /d' $PSPDEV/build.txt
-git log -1 --format="psptoolchain-allegrex %H %cs" >> $PSPDEV/build.txt
+BUILD_FILE="${PSPDEV}/build.txt"
+if [[ -f "${BUILD_FILE}" ]]; then
+  sed -i '/^psptoolchain-allegrex /d' "${BUILD_FILE}"
+fi
+git log -1 --format="psptoolchain-allegrex %H %cs" >> "${BUILD_FILE}"
