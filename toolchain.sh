@@ -48,4 +48,5 @@ else
 fi
 
 ## Store version
-git log -1 --format="psptoolchain-allegrex %H %cs" >> $PSPDEV/versions.txt
+sed -i '/^psptoolchain-allegrex /d' $PSPDEV/build.txt
+git log -1 --format="psptoolchain-allegrex %H %cs" >> $PSPDEV/build.txt

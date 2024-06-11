@@ -53,6 +53,7 @@ jobs:
     - name: Repository Dispatch
       uses: peter-evans/repository-dispatch@v2
       with:
+        context: .
         repository: ${{ github.repository_owner }}/psptoolchain-extra
         token: ${{ secrets.DISPATCH_TOKEN }}
         event-type: ${{ env.NEW_DISPATCH_ACTION }}
