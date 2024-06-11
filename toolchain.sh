@@ -47,7 +47,7 @@ else
 
 fi
 
-## Store version
+## Store build information
 BUILD_FILE="${PSPDEV}/build.txt"
 if [[ -f "${BUILD_FILE}" ]]; then
   sed -i '/^psptoolchain-allegrex /d' "${BUILD_FILE}"
