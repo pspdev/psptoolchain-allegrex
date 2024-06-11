@@ -86,9 +86,12 @@ jobs:
       if: matrix.os[0] == 'fedora'
       run: |
         dnf -y install gcc gcc-c++ make git gettext texinfo bison flex gmp-devel mpfr-devel libmpc-devel \
-          ncurses-devel diffutils glibc-gconv-extra
+          ncurses-devel diffutils glibc-gconv-extra which
 
-    - uses: actions/checkout@v4
+    - make: Checkout git repo
+      uses: actions/checkout@v4
+      with:
+        set-safe-directory: true
     
     - name: Runs all the stages in the shell
       run: |
