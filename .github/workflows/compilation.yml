@@ -70,7 +70,9 @@ jobs:
 
   build-docker:
     runs-on: ubuntu-latest
-    container: ${{ matrix.os[0] }}:latest
+    container:
+      image: ${{ matrix.os[0] }}:latest
+      options: --user 1001
     strategy:
       matrix:
         os: [[ubuntu, bash], [fedora, bash]]
@@ -90,8 +92,6 @@ jobs:
 
     - name: Checkout git repo
       uses: actions/checkout@v4
-      with:
-        set-safe-directory: true
     
     - name: Runs all the stages in the shell
       run: |
