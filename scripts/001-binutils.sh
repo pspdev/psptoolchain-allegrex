@@ -72,6 +72,8 @@ fi
   --disable-initfini-array \
   --with-python="$WITH_PYTHON" \
   --disable-werror \
+  --disable-nls \
+  --disable-dependency-tracking \
   $TARG_XTRA_OPTS
 
 ## Compile and install.

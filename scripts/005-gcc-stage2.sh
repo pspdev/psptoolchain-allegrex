@@ -68,6 +68,8 @@ cd build-$TARGET-stage2
   --disable-libssp \
   --disable-multilib \
   --enable-threads=posix \
+  --disable-nls \
+  --disable-dependency-tracking \
   $TARG_XTRA_OPTS
 
 ## Compile and install.
