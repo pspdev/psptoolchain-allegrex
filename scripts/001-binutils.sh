@@ -63,7 +63,7 @@ else
 fi
 
 ## Configure the build.
-../configure \
+../configure -C \
   --quiet \
   --prefix="$PSPDEV" \
   --target="$TARGET" \
