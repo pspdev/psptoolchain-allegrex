@@ -50,7 +50,6 @@ rm -rf build-$TARGET && mkdir build-$TARGET && cd build-$TARGET
 	--enable-newlib-io-c99-formats \
  	--enable-newlib-iconv \
   	--enable-newlib-iconv-encodings=us_ascii,utf8,utf16,ucs_2_internal,ucs_4_internal,iso_8859_1 \
-	--disable-nls \
 	--disable-dependency-tracking \
 	$TARG_XTRA_OPTS
 
