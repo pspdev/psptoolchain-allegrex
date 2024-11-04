@@ -41,7 +41,7 @@ PROC_NR=$(getconf _NPROCESSORS_ONLN)
 rm -rf build-$TARGET && mkdir build-$TARGET && cd build-$TARGET
 
 # Configure the build.
-../configure \
+../configure -C \
 	--prefix="$PSPDEV" \
 	--target="$TARGET" \
 	--with-sysroot="$PSPDEV/$TARGET" \
