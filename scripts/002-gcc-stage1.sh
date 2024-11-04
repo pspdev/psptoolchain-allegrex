@@ -56,7 +56,7 @@ mkdir build-$TARGET-stage1
 cd build-$TARGET-stage1
 
 ## Configure the build.
-../configure -C \
+../configure -C > "/dev/null" \
   --quiet \
   --prefix="$PSPDEV" \
   --target="$TARGET" \
