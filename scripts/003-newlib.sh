@@ -58,6 +58,10 @@ make --quiet -j $PROC_NR all
 make --quiet -j $PROC_NR install-strip
 make --quiet -j $PROC_NR clean
 
+# Copy license file
+mkdir -p $PSPDEV/psp/share/licenses/newlib
+cp ../COPYING.NEWLIB $PSPDEV/psp/share/licenses/newlib/
+
 ## Store build information
 BUILD_FILE="${PSPDEV}/build.txt"
 if [[ -f "${BUILD_FILE}" ]]; then

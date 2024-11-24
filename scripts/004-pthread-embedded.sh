@@ -45,6 +45,10 @@ make --quiet -j $PROC_NR all
 make --quiet -j $PROC_NR install
 make --quiet -j $PROC_NR clean
 
+# Copy license file
+mkdir -p $PSPDEV/psp/share/licenses/pthread-embedded
+cp ../../COPYING.* ../../README.md $PSPDEV/psp/share/licenses/pthread-embedded/
+
 ## Store build information
 BUILD_FILE="${PSPDEV}/build.txt"
 if [[ -f "${BUILD_FILE}" ]]; then
