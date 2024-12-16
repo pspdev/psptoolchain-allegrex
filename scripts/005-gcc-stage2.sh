@@ -56,7 +56,6 @@ mkdir build-$TARGET-stage2
 cd build-$TARGET-stage2
 
 ## Configure the build.
-export CXXFLAGS="-std=c++11"
 ../configure \
   --quiet \
   --prefix="$PSPDEV" \
@@ -71,6 +70,7 @@ export CXXFLAGS="-std=c++11"
   --enable-threads=posix \
   --disable-tls \
   --disable-nls \
+  --enable-cxx-flags="-std=c++11" \
   $TARG_XTRA_OPTS
 
 ## Compile and install.
