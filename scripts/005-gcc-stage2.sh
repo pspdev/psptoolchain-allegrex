@@ -70,7 +70,7 @@ cd build-$TARGET-stage2
   --enable-threads=posix \
   --disable-tls \
   --disable-nls \
-  --enable-cxx-flags="-std=c++11" \
+  --enable-cxx-flags="-fno-enforce-eh-specs" \
   $TARG_XTRA_OPTS
 
 ## Compile and install.
