@@ -70,6 +70,7 @@ export CXXFLAGS="-std=c++11"
   --disable-multilib \
   --enable-threads=posix \
   --disable-tls \
+  --disable-nls \
   $TARG_XTRA_OPTS
 
 ## Compile and install.
