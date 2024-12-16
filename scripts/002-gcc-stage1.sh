@@ -71,6 +71,7 @@ cd build-$TARGET-stage1
   --disable-libgomp \
   --disable-libmudflap \
   --disable-libquadmath \
+  --disable-nls \
   $TARG_XTRA_OPTS
 
 ## Compile and install.
