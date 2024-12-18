@@ -56,7 +56,6 @@ mkdir build-$TARGET-stage2
 cd build-$TARGET-stage2
 
 ## Configure the build.
-export CXXFLAGS="-std=c++11"
 ../configure \
   --quiet \
   --prefix="$PSPDEV" \
