@@ -1,5 +1,5 @@
 # First stage
-FROM alpine:latest
+FROM alpine:3.20
 
 ENV PSPDEV /usr/local/pspdev
 ENV PATH $PATH:${PSPDEV}/bin
