@@ -68,6 +68,7 @@ WITH_PYTHON="${WITH_PYTHON:-no}"
   --disable-initfini-array \
   --with-python="$WITH_PYTHON" \
   --disable-werror \
+  --with-system-readline \
   $TARG_XTRA_OPTS
 
 ## Compile and install.
