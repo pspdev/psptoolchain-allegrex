@@ -85,8 +85,7 @@ jobs:
     - name: Install dependencies Fedora
       if: matrix.os[0] == 'fedora'
       run: |
-        dnf -y install gcc gcc-c++ make git gettext texinfo bison flex gmp-devel mpfr-devel libmpc-devel \
-          ncurses-devel diffutils glibc-gconv-extra which
+        ./prepare-fedora.sh
 
     - name: Checkout git repo
       uses: actions/checkout@v4
