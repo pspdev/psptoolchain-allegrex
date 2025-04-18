@@ -46,6 +46,8 @@ if [ "$(uname -s)" = "Darwin" ]; then
   if command -v port &> /dev/null; then
     TARG_XTRA_OPTS="--with-gmp=$(port -q prefix gmp) --with-mpfr=$(port -q prefix mpfr)"
   fi
+else
+  TARG_XTRA_OPTS="--with-system-readline"
 fi
 
 ## Determine the maximum number of processes that Make can work with.
@@ -68,7 +70,6 @@ WITH_PYTHON="${WITH_PYTHON:-no}"
   --disable-initfini-array \
   --with-python="$WITH_PYTHON" \
   --disable-werror \
-  --with-system-readline \
   $TARG_XTRA_OPTS
 
 ## Compile and install.
