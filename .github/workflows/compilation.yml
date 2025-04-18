@@ -29,14 +29,13 @@ jobs:
     - name: Install on Ubuntu
       if: matrix.os[0] == 'ubuntu-latest'
       run: |
-        sudo apt-get update
-        sudo apt-get -y install texinfo bison flex gettext libgmp3-dev libmpfr-dev libmpc-dev
+        ./prepare-debian-ubuntu.sh
 
     - name: Install on Mac(s)
       if: startsWith(matrix.os[0], 'macos')
       run: |
         brew update
-        brew install texinfo bison flex gnu-sed gsl
+        brew install texinfo bison flex gnu-sed gsl readline
 
     - name: Install in MSYS2
       if: matrix.os[0] == 'windows-latest'
@@ -45,7 +44,7 @@ jobs:
         msystem: MINGW32
         install: |
           base-devel git make texinfo flex bison patch binutils mingw-w64-i686-gcc mpc-devel tar
-          mingw-w64-i686-cmake mingw-w64-i686-make mingw-w64-i686-libogg
+          mingw-w64-i686-cmake mingw-w64-i686-make mingw-w64-i686-libogg mingw-w64-i686-readline
         update: true
 
     - name: Runs all stages
@@ -78,9 +77,7 @@ jobs:
     - name: Install dependencies Ubuntu
       if: matrix.os[0] == 'ubuntu'
       run: |
-        apt-get -y update
-        DEBIAN_FRONTEND="noninteractive" TZ="Europe/London" apt-get -y install file bison make flex texinfo gettext \
-          g++ gcc git libgmp3-dev libmpfr-dev libmpc-dev libncurses5-dev
+        DEBIAN_FRONTEND="noninteractive" TZ="Europe/London" ./prepare-debian-ubuntu.sh
     
     - name: Install dependencies Fedora
       if: matrix.os[0] == 'fedora'
