@@ -73,6 +73,7 @@ jobs:
     strategy:
       matrix:
         os: [[ubuntu, bash], [fedora, bash]]
+      fail-fast: false
     steps:
     - name: Checkout git repo
       uses: actions/checkout@v4
