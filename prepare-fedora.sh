@@ -7,4 +7,4 @@ fi
 
 # Install build dependencies
 dnf -y install gcc gcc-c++ make git gettext texinfo bison flex gmp-devel mpfr-devel libmpc-devel \
-    ncurses-devel diffutils glibc-gconv-extra which gawk file readline-devel expat-devel
+    ncurses-devel diffutils glibc-gconv-extra which gawk file readline-devel expat-devel elfutils-debuginfod-client-devel
