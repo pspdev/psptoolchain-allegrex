@@ -70,10 +70,10 @@ jobs:
 
   build-docker:
     runs-on: ubuntu-latest
-    container: ${{ matrix.os[0] }}:latest
+    container: ${{ matrix.os[0] }}:${{ matrix.os[2] }}
     strategy:
       matrix:
-        os: [[ubuntu, bash], [fedora, bash]]
+        os: [[ubuntu, bash, latest], [fedora, bash, 41]]
     steps:
     - name: Install dependencies Ubuntu
       if: matrix.os[0] == 'ubuntu'
