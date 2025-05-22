@@ -42,10 +42,14 @@ jobs:
       if: matrix.os[0] == 'windows-latest'
       uses: msys2/setup-msys2@v2
       with:
-        msystem: MINGW32
+        msystem: MINGW64
         install: |
-          base-devel git make texinfo flex bison patch binutils mingw-w64-i686-gcc mpc-devel tar
-          mingw-w64-i686-cmake mingw-w64-i686-make mingw-w64-i686-libogg
+          binutils bison flex patch tar git mpc-devel
+          mingw-w64-x86_64-gcc
+          mingw-w64-x86_64-autotools
+          mingw-w64-x86_64-make
+          mingw-w64-x86_64-cmake
+          mingw-w64-x86_64-texinfo
         update: true
 
     - name: Runs all stages
